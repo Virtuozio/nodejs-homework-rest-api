@@ -1,6 +1,5 @@
 const Contact = require("../models/contactsModel");
-const catchAsync = require("../utils/catchAsync");
-const { contactsDataValidator } = require("../utils/contactsValidator");
+const { contactsDataValidator, catchAsync } = require("../utils");
 
 exports.checkContactData = catchAsync(async (req, res, next) => {
   const { error, value } = contactsDataValidator(req.body);
