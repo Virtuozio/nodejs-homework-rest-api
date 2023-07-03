@@ -4,7 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const contactsRouter = require("./routes/api/contacts");
-
+const usersRouter = require("./routes/api/auth");
 dotenv.config({ path: "./.env" });
 
 const app = express();
@@ -25,6 +25,7 @@ mongoose
     process.exit(1);
   });
 app.use("/api/contacts", contactsRouter);
+app.use("/api/users", usersRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
