@@ -8,7 +8,10 @@ const {
 const { login } = require("../../controllers/users/login");
 const { getCurrentUser } = require("../../controllers/users/getCurrentUser");
 const { logout } = require("../../controllers/users/logout");
+const { updateUserSub } = require("../../controllers/users/updateUserSub");
 const router = express.Router();
+
+router.patch("/", updateUserSub);
 
 router.post("/register", checkCreatedUserData, registration);
 router.post("/login", checkLoginedUserData, login);
