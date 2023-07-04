@@ -8,8 +8,11 @@ const {
   updateStatusContact,
 } = require("../../controllers/contacts");
 const { checkContactData } = require("../../middlewares/contactsMiddlewares");
+const { protect } = require("../../middlewares/usersMiddlewares");
 
 const router = express.Router();
+
+router.use(protect);
 
 router.route("/").post(checkContactData, addContact).get(getAllContacts);
 
