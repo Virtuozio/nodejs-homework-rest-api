@@ -7,9 +7,8 @@ const {
   updateContact,
   updateStatusContact,
 } = require("../../controllers/contacts");
-const { checkContactData } = require("../../middlewares/contactsMiddlewares");
-const { protect } = require("../../middlewares/usersMiddlewares");
-
+const { checkContactData } = require("../../middlewares/contacts/contactsMiddlewares");
+const { protect } = require("../../middlewares/users");
 const router = express.Router();
 
 router.use(protect);

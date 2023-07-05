@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const userSchema = mongoose.Schema(
   {
     password: {
@@ -16,6 +17,7 @@ const userSchema = mongoose.Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
+    avatarURL: String,
     token: String,
   },
   { versionKey: false }
@@ -23,6 +25,11 @@ const userSchema = mongoose.Schema(
 
 // Pre save hook. Fires on Create and Save.
 userSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    const emailHash = crypto.createHash("md5").update(this.email).digest("hex");
+
+    this.avatarURL = `https://www.gravatar.com/avatar/${emailHash}.jpg?d=retro`;
+  }
   if (!this.isModified("password")) return next();
 
   // hash passwd only when passwd changed
