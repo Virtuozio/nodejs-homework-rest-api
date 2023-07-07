@@ -15,6 +15,8 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static("public"));
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
