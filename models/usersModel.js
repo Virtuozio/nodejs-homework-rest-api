@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const { v4 } = require("uuid");
 const userSchema = mongoose.Schema(
   {
     password: {
@@ -17,8 +18,22 @@ const userSchema = mongoose.Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
-    avatarURL: String,
-    token: String,
+    avatarURL: {
+      type: String,
+      default: null,
+    },
+    token: {
+      type: String,
+      default: null,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   { versionKey: false }
 );
@@ -35,6 +50,8 @@ userSchema.pre("save", async function (next) {
   // hash passwd only when passwd changed
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+
+  this.verificationToken = v4();
 
   next();
 });
