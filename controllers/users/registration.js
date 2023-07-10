@@ -1,10 +1,11 @@
 const User = require("../../models/usersModel");
 const { catchAsync, signToken, sendEmail } = require("../../utils");
-const nanoid = require("nanoid");
+const { v4 } = require("uuid");
+
 exports.registration = catchAsync(async (req, res) => {
   const newUserData = {
     ...req.body,
-    verificationToken: nanoid(),
+    verificationToken: v4(),
   };
   const newUser = await User.create(newUserData);
   newUser.password = undefined;

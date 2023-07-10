@@ -1,4 +1,4 @@
-const { catchAsync, verifyValidator } = require("../utils");
+const { catchAsync, verifyValidator } = require("../../utils");
 exports.verify = catchAsync(async (req, res, next) => {
   if (!Object.keys(req.body).includes("email"))
     return res.status(401).json({ message: "missing field email" });
